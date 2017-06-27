@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovPlayer : MonoBehaviour {
-    Rigidbody2D rgb;
-    float vel;
-    float velRot;
-    float acum;
+    private Rigidbody2D rgb;
+    [SerializeField]
+    private Slider sliderFuel;
+    private float vel;
+    private float velRot;
+    private int fuel;
 
     void Awake()
     {
@@ -14,19 +17,21 @@ public class MovPlayer : MonoBehaviour {
     }
     void Start ()
     {
-        ImpulsoInicial();
-        vel = 10f;
+        vel = 20f;
         velRot = 2f;
-        acum = 0;
-	}
+        fuel = 1000;
+        ImpulsoInicial();
+    }
 
     void FixedUpdate()
     {
         Acelerar();
         Rotar();
     }
-    void Update () {
-		
+    void Update ()
+    {
+        print(fuel);
+        sliderFuel.value = fuel;
 	}
     void ImpulsoInicial()
     {
@@ -35,17 +40,25 @@ public class MovPlayer : MonoBehaviour {
     }
     void Acelerar()
     {
-        if (Input.GetButton("Aceleration"))
+        if (Input.GetButton("Aceleration") && fuel > 0)
         {
+            fuel--;
             rgb.AddRelativeForce(Vector2.up * Time.deltaTime * vel, ForceMode2D.Force);
         }
     }
     void Rotar()
     {
-        if(Input.GetButton("RotarDer") && transform.rotation.z < 90)
+        if (Input.GetButton("RotarDer") && transform.rotation.z > -0.70)
         {
             rgb.AddTorque(-velRot);
-            acum += velRot;
+        }
+        else if (Input.GetButton("RotarIzq") && transform.rotation.z < 0.70)
+        {
+            rgb.AddTorque(velRot);
+        }
+        else
+        {
+            rgb.angularVelocity = 0;
         }
     }
 }
