@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerState : MonoBehaviour {
-
-	void Start () {
+    [SerializeField]
+    private GameObject mundoObjet;
+    private Mundo mundo;
+	void Awake () {
+        mundoObjet = GameObject.Find("Mundo");
+        mundo = mundoObjet.GetComponent<Mundo>();
 	}
 	
 	void Update () {
@@ -12,7 +16,11 @@ public class PlayerState : MonoBehaviour {
 
     public void Dead()
     {
-        print("asdad");
-        Destroy(gameObject);
+        print("asda");
+        mundo.ChangeScene("Lose");
+    }
+    public void Win()
+    {
+        mundo.ChangeScene("Win");
     }
 }

@@ -30,7 +30,7 @@ public class MovPlayer : MonoBehaviour {
     }
     void Update ()
     {
-        print(fuel);
+        //print(rgb.velocity);
         sliderFuel.value = fuel;
 	}
     void ImpulsoInicial()
