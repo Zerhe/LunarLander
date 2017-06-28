@@ -19,7 +19,7 @@ public class MovPlayer : MonoBehaviour {
     {
         vel = 20f;
         velRot = 2f;
-        fuel = 1000;
+        fuel = 500;
         ImpulsoInicial();
     }
 

@@ -8,6 +8,7 @@ public class Mundo : MonoBehaviour {
 
 	void Awake () {
         DontDestroyOnLoad(gameObject);
+        _audio = GetComponent<AudioSource>();
 	}
 	void Update () {
         ReturnToMenu();
@@ -25,7 +26,7 @@ public class Mundo : MonoBehaviour {
         if(Input.GetButton("Cancel"))
         {
             ChangeScene("Menu");
+            _audio.Stop();
         }
-        _audio.Stop();
     }
 }
