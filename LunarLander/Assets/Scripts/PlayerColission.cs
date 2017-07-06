@@ -13,7 +13,9 @@ public class PlayerColission : MonoBehaviour {
 	
 	void Update () {
         print(rgb.velocity.y);
-	}
+        print(transform.rotation.z);
+
+    }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -21,7 +23,7 @@ public class PlayerColission : MonoBehaviour {
         {
             playerState.Dead();
         }
-        else if (coll.gameObject.tag == "Win" && rgb.velocity.y < -0.05f)
+        else if (coll.gameObject.tag == "Win" && rgb.velocity.y < -0.3f || transform.rotation.z < -0.1f || transform.rotation.z > 0.1f)
         {
             playerState.Dead();
         }
