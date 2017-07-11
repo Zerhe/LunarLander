@@ -6,6 +6,9 @@ public class PlayerState : MonoBehaviour {
     [SerializeField]
     private GameObject mundoObjet;
     private Mundo mundo;
+    public delegate void Funcion(int numero);
+    public Funcion win;
+
 	void Awake () {
         mundoObjet = GameObject.Find("Mundo");
         mundo = mundoObjet.GetComponent<Mundo>();
@@ -18,9 +21,11 @@ public class PlayerState : MonoBehaviour {
     {
         print("asda");
         mundo.ChangeScene("Lose");
+        PlayerPrefs.SetInt("Score", 0);
     }
-    public void Win()
+    public void Win(int score)
     {
+        win(score);
         mundo.ChangeScene("Win");
     }
 }

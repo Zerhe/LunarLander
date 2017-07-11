@@ -5,15 +5,19 @@ using UnityEngine;
 public class PlayerColission : MonoBehaviour {
     private PlayerState playerState;
     private Rigidbody2D rgb;
+    private float rotacionCollision;
+    private float velocityCollision;
 
 	void Awake () {
        playerState = GetComponent<PlayerState>();
        rgb = GetComponent<Rigidbody2D>();
+       rotacionCollision = 0.1f;
+       velocityCollision = 0.3f;
 	}
 	
 	void Update () {
-        print(rgb.velocity.y);
-        print(transform.rotation.z);
+        //print(rgb.velocity.y);
+        //print(transform.rotation.z);
 
     }
 
@@ -23,13 +27,13 @@ public class PlayerColission : MonoBehaviour {
         {
             playerState.Dead();
         }
-        else if (coll.gameObject.tag == "Win" && rgb.velocity.y < -0.3f || transform.rotation.z < -0.1f || transform.rotation.z > 0.1f)
+        else if (coll.gameObject.tag == "Win" && rgb.velocity.y < -velocityCollision || transform.rotation.z < -rotacionCollision || transform.rotation.z > rotacionCollision)
         {
             playerState.Dead();
         }
         else if (coll.gameObject.tag == "Win")
         {
-            playerState.Win();
+            playerState.Win(coll.gameObject.GetComponent<Puntaje>().getPuntaje());
         }
     }
 }

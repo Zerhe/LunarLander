@@ -12,6 +12,7 @@ public class Mundo : MonoBehaviour {
 	}
 	void Update () {
         ReturnToMenu();
+        RestarScene();
 	}
     public void ChangeScene(string nameScene)
     {
@@ -27,6 +28,15 @@ public class Mundo : MonoBehaviour {
         {
             ChangeScene("Menu");
             _audio.Stop();
+            Destroy(gameObject);
+            PlayerPrefs.SetInt("Score", 0);
+        }
+    }
+    public void RestarScene()
+    {
+        if (Input.GetButton("Reset"))
+        {
+            ChangeScene("Juego");
         }
     }
 }
