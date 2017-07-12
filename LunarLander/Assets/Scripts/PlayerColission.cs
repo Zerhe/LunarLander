@@ -16,24 +16,28 @@ public class PlayerColission : MonoBehaviour {
 	}
 	
 	void Update () {
-        //print(rgb.velocity.y);
+        print(rgb.velocity.y);
         //print(transform.rotation.z);
 
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        print(coll.relativeVelocity.y);
+
         if (coll.gameObject.tag == "Kill")
-        {
-            playerState.Dead();
-        }
-        else if (coll.gameObject.tag == "Win" && rgb.velocity.y < -velocityCollision || transform.rotation.z < -rotacionCollision || transform.rotation.z > rotacionCollision)
         {
             playerState.Dead();
         }
         else if (coll.gameObject.tag == "Win")
         {
-            playerState.Win(coll.gameObject.GetComponent<Puntaje>().getPuntaje());
+            if (coll.relativeVelocity.y < -velocityCollision || transform.rotation.z < -rotacionCollision || transform.rotation.z > rotacionCollision)
+            {
+                playerState.Dead();
+            }
+            else
+                playerState.Win(coll.gameObject.GetComponent<Puntaje>().getPuntaje());
         }
+
     }
 }

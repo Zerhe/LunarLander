@@ -21,7 +21,7 @@ public class PlayerState : MonoBehaviour {
     {
         print("asda");
         mundo.ChangeScene("Lose");
-        PlayerPrefs.SetInt("Score", 0);
+        Scores._score = 0;
     }
     public void Win(int score)
     {

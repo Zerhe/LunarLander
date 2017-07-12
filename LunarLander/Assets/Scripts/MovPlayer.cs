@@ -20,6 +20,9 @@ public class MovPlayer : MonoBehaviour {
     private float velRot;
     private int fuel;
     private float limiteRotacion;
+    private bool acelerar;
+    private bool rotarDer;
+    private bool rotarIzq;
 
     void Awake()
     {
@@ -33,15 +36,30 @@ public class MovPlayer : MonoBehaviour {
         fuel = 500;
         limiteRotacion = 0.70f;
         ImpulsoInicial();
+        Vector3 worldPos = Camera.main.ViewportToWorldPoint(new Vector3(0.2f, 0.9f));
+        transform.position = new Vector3(worldPos.x, worldPos.y, transform.position.z);
     }
 
     void FixedUpdate()
     {
-        Acelerar();
-        Rotar();
+        if(acelerar)
+        {
+            rgb.AddRelativeForce(Vector2.up * Time.deltaTime * vel, ForceMode2D.Force);
+        }
+        if(rotarDer)
+        {
+            rgb.AddTorque(-velRot);
+        }
+        else if (rotarIzq)
+        {
+            rgb.AddTorque(velRot);
+        }
+
     }
     void Update ()
     {
+        Acelerar();
+        Rotar();
         sliderFuel.value = fuel;
         velocityHorizontalText.text = "Velocity Horizontal: " + rgb.velocity.x * 10;
         velocityVerticalText.text = "Velocity Vertical: " + rgb.velocity.y * 10;
@@ -56,24 +74,29 @@ public class MovPlayer : MonoBehaviour {
         if (Input.GetButton("Aceleration") && fuel > 0)
         {
             fuel--;
-            rgb.AddRelativeForce(Vector2.up * Time.deltaTime * vel, ForceMode2D.Force);
+            acelerar = true;
             rend.sprite = spriteAcelerar;
         }
         else
+        {
+            acelerar = false;
             rend.sprite = spriteInmovil;
+        }
     }
     void Rotar()
     {
         if (Input.GetButton("RotarDer") && transform.rotation.z > -limiteRotacion)
         {
-            rgb.AddTorque(-velRot);
+            rotarDer = true;
         }
         else if (Input.GetButton("RotarIzq") && transform.rotation.z < limiteRotacion)
         {
-            rgb.AddTorque(velRot);
+            rotarIzq = true;
         }
         else
         {
+            rotarDer = false;
+            rotarIzq = false;
             rgb.angularVelocity = 0;
         }
     }

@@ -29,7 +29,7 @@ public class Mundo : MonoBehaviour {
             ChangeScene("Menu");
             _audio.Stop();
             Destroy(gameObject);
-            PlayerPrefs.SetInt("Score", 0);
+            Scores._score = 0;
         }
     }
     public void RestarScene()
@@ -38,5 +38,9 @@ public class Mundo : MonoBehaviour {
         {
             ChangeScene("Juego");
         }
+    }
+    public void RestartMaxScore()
+    {
+        PlayerPrefs.SetInt("MaxScore", 0);
     }
 }
